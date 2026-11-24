@@ -1,0 +1,3041 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="theme-color" content="#0E2A3B" />
+  <meta name="description" content="Aplikasi Koreksi Lembar Jawab Pilihan Ganda Otomatis dari Foto HP - SMPN 1 Sukamantri" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <title>Koreksi Lembar Jawab — SMPN 1 Sukamantri</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ==========================================================================
+       1. DESIGN TOKENS (THREE-BLOCK DARK MODE PATTERN)
+       ========================================================================== */
+    :root {
+      --bg-page: #E6EDF3;
+      --bg-card: #FFFFFF;
+      --bg-card-alt: #F4F7FA;
+      --bg-pastel-blue: #DCEEFF;
+      --bg-pastel-green: #DCF7E7;
+      --bg-pastel-pink: #FDE2E8;
+      --bg-pastel-yellow: #FEF3C7;
+      --bg-hero: #0E2A3B;
+      --text-hero: #FFFFFF;
+      --text-hero-muted: #93C5FD;
+      --accent-sky: #38BDF8;
+      --accent-primary: #0284C7;
+      --accent-primary-hover: #0369A1;
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --border-subtle: #CBD5E1;
+      --nav-bg: #0E2A3B;
+      --nav-text: #CBD5E1;
+      --nav-active-bg: #38BDF8;
+      --nav-active-text: #0E2A3B;
+      --status-green-bg: #DCFCE7;
+      --status-green-text: #166534;
+      --status-red-bg: #FEE2E2;
+      --status-red-text: #991B1B;
+      --status-gray-bg: #E2E8F0;
+      --status-gray-text: #475569;
+      --status-yellow-bg: #FEF3C7;
+      --status-yellow-text: #92400E;
+      --shadow-sm: 0 4px 14px rgba(14, 42, 59, 0.06);
+      --shadow-lg: 0 14px 34px rgba(14, 42, 59, 0.16);
+      --radius-bento: 28px;
+      --radius-pill: 999px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg-page: #09131C;
+        --bg-card: #122230;
+        --bg-card-alt: #182C3E;
+        --bg-pastel-blue: #15324B;
+        --bg-pastel-green: #12382B;
+        --bg-pastel-pink: #3B1D2A;
+        --bg-pastel-yellow: #3A2E14;
+        --bg-hero: #0A1E2B;
+        --text-hero: #F8FAFC;
+        --text-hero-muted: #7DD3FC;
+        --accent-sky: #38BDF8;
+        --accent-primary: #38BDF8;
+        --accent-primary-hover: #7DD3FC;
+        --text-main: #F1F5F9;
+        --text-muted: #94A3B8;
+        --border-subtle: #263E52;
+        --nav-bg: #162B3C;
+        --nav-text: #94A3B8;
+        --nav-active-bg: #38BDF8;
+        --nav-active-text: #09131C;
+        --status-green-bg: #14532D;
+        --status-green-text: #BBF7D0;
+        --status-red-bg: #7F1D1D;
+        --status-red-text: #FECACA;
+        --status-gray-bg: #1E293B;
+        --status-gray-text: #CBD5E1;
+        --status-yellow-bg: #78350F;
+        --status-yellow-text: #FDE68A;
+        --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 14px 34px rgba(0, 0, 0, 0.5);
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg-page: #09131C;
+      --bg-card: #122230;
+      --bg-card-alt: #182C3E;
+      --bg-pastel-blue: #15324B;
+      --bg-pastel-green: #12382B;
+      --bg-pastel-pink: #3B1D2A;
+      --bg-pastel-yellow: #3A2E14;
+      --bg-hero: #0A1E2B;
+      --text-hero: #F8FAFC;
+      --text-hero-muted: #7DD3FC;
+      --accent-sky: #38BDF8;
+      --accent-primary: #38BDF8;
+      --accent-primary-hover: #7DD3FC;
+      --text-main: #F1F5F9;
+      --text-muted: #94A3B8;
+      --border-subtle: #263E52;
+      --nav-bg: #162B3C;
+      --nav-text: #94A3B8;
+      --nav-active-bg: #38BDF8;
+      --nav-active-text: #09131C;
+      --status-green-bg: #14532D;
+      --status-green-text: #BBF7D0;
+      --status-red-bg: #7F1D1D;
+      --status-red-text: #FECACA;
+      --status-gray-bg: #1E293B;
+      --status-gray-text: #CBD5E1;
+      --status-yellow-bg: #78350F;
+      --status-yellow-text: #FDE68A;
+      --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.3);
+      --shadow-lg: 0 14px 34px rgba(0, 0, 0, 0.5);
+    }
+
+    @property --ring-pct {
+      syntax: '<number>';
+      inherits: false;
+      initial-value: 0;
+    }
+
+    /* ==========================================================================
+       2. RESET & BASE STYLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      max-width: 100%;
+      overflow-x: hidden;
+      font-family: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.45;
+      -webkit-tap-highlight-color: transparent;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    input, select, textarea, button {
+      font-family: inherit;
+      font-size: 16px; /* Cegah auto-zoom Safari iOS */
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    /* ==========================================================================
+       3. LAYOUT SHELL (MOBILE-FIRST & DESKTOP >= 1100px)
+       ========================================================================== */
+    .app-shell {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      max-width: 1360px;
+      margin: 0 auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: color-mix(in srgb, var(--bg-page) 88%, transparent);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+    }
+
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: var(--bg-hero);
+      color: var(--accent-sky);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .brand-title {
+      font-size: 16px;
+      font-weight: 800;
+      line-height: 1.15;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .theme-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      display: grid;
+      place-items: center;
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+      flex-shrink: 0;
+    }
+
+    /* Navigation: Mobile Floating Pill */
+    .nav-bar {
+      position: fixed;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      background: var(--nav-bg);
+      padding: 6px;
+      border-radius: var(--radius-pill);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      box-shadow: var(--shadow-lg);
+      max-width: calc(100vw - 24px);
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 44px;
+      padding: 0 14px;
+      border-radius: var(--radius-pill);
+      color: var(--nav-text);
+      font-weight: 700;
+      font-size: 14px;
+      transition: all 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+      white-space: nowrap;
+    }
+
+    .nav-item .nav-label {
+      display: none;
+    }
+
+    .nav-item.active {
+      background: var(--nav-active-bg);
+      color: var(--nav-active-text);
+      padding: 0 18px;
+    }
+
+    .nav-item.active .nav-label {
+      display: inline;
+    }
+
+    .nav-badge {
+      background: #EF4444;
+      color: #FFFFFF;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 999px;
+      margin-left: 2px;
+    }
+
+    .main-area {
+      flex: 1;
+      padding: 4px 16px 110px;
+      width: 100%;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .app-footer {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: 24px 12px 12px;
+    }
+
+    /* Desktop Rail Layout (>= 1100px) */
+    @media (min-width: 1100px) {
+      .app-shell {
+        display: grid;
+        grid-template-columns: 236px 1fr;
+        grid-template-rows: auto 1fr;
+        gap: 0 24px;
+        padding: 16px 24px;
+      }
+
+      .topbar {
+        grid-column: 1;
+        grid-row: 1;
+        position: static;
+        background: transparent;
+        backdrop-filter: none;
+        padding: 8px 0 16px;
+      }
+
+      .nav-bar {
+        grid-column: 1;
+        grid-row: 2;
+        position: sticky;
+        top: 20px;
+        bottom: auto;
+        left: auto;
+        transform: none;
+        flex-direction: column;
+        align-items: stretch;
+        border-radius: var(--radius-bento);
+        padding: 12px;
+        gap: 6px;
+        height: fit-content;
+        max-width: 236px;
+      }
+
+      .nav-item {
+        justify-content: flex-start;
+        padding: 0 16px;
+        height: 48px;
+      }
+
+      .nav-item .nav-label {
+        display: inline;
+      }
+
+      .nav-badge {
+        margin-left: auto;
+      }
+
+      .main-area {
+        grid-column: 2;
+        grid-row: 1 / span 2;
+        padding: 8px 0 48px;
+      }
+
+      .desktop-two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        align-items: start;
+      }
+    }
+
+    /* ==========================================================================
+       4. BENTO COMPONENTS, CARDS, TABS & CONTROLS
+       ========================================================================== */
+    .bento-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .bento-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-bento);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid color-mix(in srgb, var(--border-subtle) 55%, transparent);
+      animation: fadeUp 0.32s ease both;
+    }
+
+    .bento-pastel-blue { background: var(--bg-pastel-blue); }
+    .bento-pastel-green { background: var(--bg-pastel-green); }
+    .bento-pastel-pink { background: var(--bg-pastel-pink); }
+    .bento-pastel-yellow { background: var(--bg-pastel-yellow); }
+
+    .bento-hero {
+      background: var(--bg-hero);
+      color: var(--text-hero);
+      border: none;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    .page-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .page-title {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .exam-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 700;
+      max-width: 100%;
+    }
+
+    .sub-tabs {
+      display: flex;
+      gap: 6px;
+      background: var(--bg-card);
+      padding: 5px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 16px;
+      border: 1px solid var(--border-subtle);
+      overflow-x: auto;
+    }
+
+    .sub-tab {
+      flex: 1;
+      padding: 9px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-muted);
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .sub-tab.active {
+      background: var(--bg-hero);
+      color: #FFFFFF;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .field-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .input-box {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1.5px solid var(--border-subtle);
+      background: var(--bg-card-alt);
+      font-weight: 600;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .input-box:focus {
+      border-color: var(--accent-primary);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 18px;
+      font-weight: 700;
+      font-size: 15px;
+      transition: transform 0.12s, background-color 0.2s;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: var(--accent-primary);
+      color: #FFFFFF;
+    }
+
+    .btn-hero {
+      background: var(--bg-hero);
+      color: #FFFFFF;
+    }
+
+    .btn-soft {
+      background: var(--bg-card-alt);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+    }
+
+    .btn-danger {
+      background: var(--status-red-bg);
+      color: var(--status-red-text);
+    }
+
+    .btn-sm {
+      padding: 8px 13px;
+      font-size: 13px;
+      border-radius: 14px;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    /* ==========================================================================
+       5. ANSWER KEY GRID & SCAN ANSWER GRID
+       ========================================================================== */
+    .key-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(62px, 1fr));
+      gap: 8px;
+    }
+
+    .key-cell {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      border-radius: 14px;
+      background: var(--bg-card-alt);
+      border: 1.5px solid var(--border-subtle);
+      font-weight: 800;
+      font-size: 14px;
+      user-select: none;
+    }
+
+    .key-cell.filled {
+      background: var(--bg-pastel-blue);
+      border-color: var(--accent-primary);
+    }
+
+    .key-num {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .ans-chip-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(52px, 1fr));
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .ans-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 8px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .ans-benar { background: var(--status-green-bg); color: var(--status-green-text); }
+    .ans-salah { background: var(--status-red-bg); color: var(--status-red-text); }
+    .ans-kosong { background: var(--status-gray-bg); color: var(--status-gray-text); }
+    .ans-ganda { background: var(--status-yellow-bg); color: var(--status-yellow-text); }
+    .ans-cek {
+      background: var(--status-yellow-bg);
+      color: var(--status-yellow-text);
+      outline: 2px solid #F59E0B;
+    }
+
+    /* ==========================================================================
+       6. CAMERA & SCANNER VIEWPORT
+       ========================================================================== */
+    .camera-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      max-height: 62vh;
+      background: #050B10;
+      border-radius: var(--radius-bento);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .camera-stage video, .camera-stage canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .camera-overlay-msg {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      background: rgba(14, 42, 59, 0.85);
+      color: #FFFFFF;
+      padding: 10px 14px;
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      backdrop-filter: blur(6px);
+      z-index: 4;
+    }
+
+    .camera-controls {
+      position: absolute;
+      bottom: 16px;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      z-index: 5;
+    }
+
+    .shutter-btn {
+      width: 66px;
+      height: 66px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 5px solid rgba(255, 255, 255, 0.45);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .floating-scan-bar {
+      position: sticky;
+      bottom: 72px;
+      z-index: 35;
+      background: var(--bg-hero);
+      color: #FFFFFF;
+      padding: 10px 14px;
+      border-radius: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      box-shadow: var(--shadow-lg);
+      margin-top: 14px;
+    }
+
+    @media (min-width: 1100px) {
+      .floating-scan-bar {
+        bottom: 16px;
+      }
+    }
+
+    /* ==========================================================================
+       7. RESULTS SUMMARY RINGS & CHARTS
+       ========================================================================== */
+    .summary-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 1100px) {
+      .summary-row {
+        grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      }
+    }
+
+    .score-ring {
+      --ring-pct: 0;
+      width: 86px;
+      height: 86px;
+      border-radius: 50%;
+      background: conic-gradient(var(--accent-sky) calc(var(--ring-pct) * 1%), rgba(255, 255, 255, 0.16) 0);
+      display: grid;
+      place-items: center;
+      transition: --ring-pct 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      flex-shrink: 0;
+    }
+
+    .score-ring-inner {
+      width: 66px;
+      height: 66px;
+      border-radius: 50%;
+      background: var(--bg-hero);
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+
+    .big-stat {
+      font-size: 30px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-top: 6px;
+    }
+
+    .dist-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      height: 100px;
+      padding-top: 12px;
+    }
+
+    .dist-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      height: 100%;
+      justify-content: flex-end;
+    }
+
+    .dist-bar {
+      width: 100%;
+      max-width: 42px;
+      background: var(--accent-primary);
+      border-radius: 10px 10px 4px 4px;
+      min-height: 6px;
+      transition: height 0.4s ease;
+    }
+
+    .rank-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    @media (min-width: 1100px) {
+      .rank-list {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .rank-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 14px;
+      background: var(--bg-card-alt);
+      flex-shrink: 0;
+    }
+
+    .rank-1 { background: #FACC15; color: #422006; }
+    .rank-2 { background: #E2E8F0; color: #1E293B; }
+    .rank-3 { background: #FDBA74; color: #431407; }
+
+    /* ==========================================================================
+       8. SPLASH SCREEN, MANUAL MODAL & TOP TOAST
+       ========================================================================== */
+    .splash-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: linear-gradient(155deg, #0E2A3B 0%, #164461 100%);
+      color: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .splash-emblem {
+      width: 84px;
+      height: 84px;
+      border-radius: 26px;
+      background: rgba(56, 189, 248, 0.16);
+      border: 2px solid rgba(56, 189, 248, 0.45);
+      display: grid;
+      place-items: center;
+      color: #38BDF8;
+      margin-bottom: 18px;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      background: rgba(9, 19, 28, 0.72);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 12px;
+    }
+
+    @media (min-width: 768px) {
+      .modal-backdrop {
+        align-items: center;
+      }
+    }
+
+    .modal-sheet {
+      background: var(--bg-card);
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      overflow-y: auto;
+      border-radius: var(--radius-bento);
+      padding: 20px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .toast-top {
+      position: fixed;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-140%);
+      z-index: 120;
+      background: var(--bg-hero);
+      color: #FFFFFF;
+      padding: 11px 18px;
+      border-radius: var(--radius-pill);
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: var(--shadow-lg);
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      max-width: calc(100vw - 24px);
+      text-align: center;
+    }
+
+    .toast-top.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+
+  <!-- TOP TOAST NOTIFICATION -->
+  <div id="toast" class="toast-top" role="status" aria-live="polite"></div>
+
+  <!-- DAILY SPLASH SCREEN -->
+  <div id="splashScreen" class="splash-screen hidden" role="dialog" aria-modal="true" aria-label="Sampul Aplikasi">
+    <div class="splash-emblem">
+      <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+      </svg>
+    </div>
+    <div style="font-size:13px;font-weight:700;color:#7DD3FC;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;">
+      SMPN 1 SUKAMANTRI
+    </div>
+    <h1 style="font-size:28px;font-weight:800;line-height:1.15;margin-bottom:8px;">
+      Koreksi Lembar Jawab
+    </h1>
+    <p style="font-size:15px;color:#CBD5E1;max-width:320px;margin-bottom:22px;">
+      Pindai lembar jawab pilihan ganda langsung dari kamera HP, akurat dan tanpa internet.
+    </p>
+    <div style="font-size:13px;font-weight:600;color:#93C5FD;margin-bottom:26px;">
+      Oleh Dian Fitriana, S.Kom
+    </div>
+    <button id="btnStartSplash" class="btn" style="background:#38BDF8;color:#0E2A3B;padding:14px 28px;font-size:16px;border-radius:999px;">
+      Mulai Mengoreksi
+    </button>
+  </div>
+
+  <!-- MANUAL CORRECTION MODAL -->
+  <div id="manualModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="Panel Koreksi Manual">
+    <div class="modal-sheet" id="manualModalContent"></div>
+  </div>
+
+  <!-- MAIN APPLICATION SHELL -->
+  <div class="app-shell">
+    <header class="topbar">
+      <button id="btnOpenSplash" class="brand-btn" aria-label="Buka sampul aplikasi">
+        <div class="brand-logo">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4">
+            <path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title">Koreksi LJK</div>
+          <div class="brand-sub">SMPN 1 Sukamantri</div>
+        </div>
+      </button>
+
+      <button id="btnToggleTheme" class="theme-btn" aria-label="Ubah tema terang atau gelap" title="Ubah Tema">
+        <span id="themeIcon">🌙</span>
+      </button>
+    </header>
+
+    <nav class="nav-bar" aria-label="Menu Utama">
+      <button class="nav-item" data-nav="pengaturan" aria-label="Menu Pengaturan">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+        </svg>
+        <span class="nav-label">Pengaturan</span>
+      </button>
+
+      <button class="nav-item active" data-nav="pindai" aria-label="Menu Pindai">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/>
+        </svg>
+        <span class="nav-label">Pindai</span>
+      </button>
+
+      <button class="nav-item" data-nav="hasil" aria-label="Menu Hasil">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+        </svg>
+        <span class="nav-label">Hasil</span>
+        <span id="navResultBadge" class="nav-badge hidden">0</span>
+      </button>
+
+      <button class="nav-item" data-nav="riwayat" aria-label="Menu Riwayat">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span class="nav-label">Riwayat</span>
+      </button>
+    </nav>
+
+    <main class="main-area">
+      <div id="viewContainer"></div>
+      <footer class="app-footer">
+        Aplikasi oleh Dian Fitriana, S.Kom · SMPN 1 SUKAMANTRI
+      </footer>
+    </main>
+  </div>
+
+  <!-- HIDDEN FILE INPUTS -->
+  <input type="file" id="galleryInput" accept="image/*" class="hidden" />
+  <input type="file" id="keyPhotoInput" accept="image/*" class="hidden" />
+  <input type="file" id="restoreJsonInput" accept=".json,application/json" class="hidden" />
+
+  <script>
+    /* ========================================================================
+       A. STATE MANAGEMENT & LOCALSTORAGE (koreksi-ljk-v2, koreksi-ljk-tema)
+       ======================================================================== */
+    const STORAGE_KEY = 'koreksi-ljk-v2';
+    const THEME_KEY = 'koreksi-ljk-tema';
+    const SPLASH_KEY = 'koreksi-ljk-sampul';
+
+    const JENIS_UJIAN_LIST = [
+      'Sumatif Ganjil',
+      'Sumatif Genap',
+      'Sumatif Tengah Semester',
+      'Ulangan Harian',
+      'Kuis',
+      'Lainnya…'
+    ];
+
+    const CHOICES = ['A', 'B', 'C', 'D'];
+
+    function todayLocalISO() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${y}-${m}-${day}`;
+    }
+
+    function uid() {
+      return 'id-' + Math.random().toString(36).slice(2, 9) + Date.now().toString(36);
+    }
+
+    function createDemoExam() {
+      const demoKey = Array.from({ length: 50 }, (_, i) => CHOICES[(i * 3 + 1) % 4]);
+      const sampleNames = [
+        'Ahmad Fauzi', 'Siti Nurhaliza', 'Rizky Pratama', 'Dewi Lestari',
+        'Fajar Nugraha', 'Putri Rahayu', 'Dimas Saputra', 'Nadia Kartika',
+        'Rendi Setiawan', 'Intan Permata', 'Galih Prakoso', 'Ayu Wulandari',
+        'Bagas Maulana', 'Fitri Handayani'
+      ];
+      const students = sampleNames.map((nama, idx) => {
+        const answers = demoKey.map((k, qIdx) => {
+          // Simulasi variasi nilai realistis (65 - 97.5)
+          if ((idx + qIdx) % (5 + (idx % 6)) === 0 && qIdx < 40) {
+            return CHOICES[(CHOICES.indexOf(k) + 1) % 4];
+          }
+          if (idx === 3 && qIdx === 12) return '';
+          return k;
+        });
+        const evalRes = evaluateAnswers(answers, demoKey, 40);
+        return {
+          id: 'demo-s-' + idx,
+          nama,
+          answers,
+          statuses: answers.map(a => a ? 'ok' : 'kosong'),
+          score: evalRes.score,
+          benar: evalRes.benar,
+          salah: evalRes.salah,
+          kosong: evalRes.kosong,
+          cek: 0,
+          createdAt: Date.now() - (14 - idx) * 60000,
+          previewDataUrl: ''
+        };
+      });
+
+      return {
+        id: 'exam-demo-smpn1',
+        jenis: 'Sumatif Tengah Semester',
+        mapel: 'Informatika',
+        kelas: 'VII A',
+        jumlahSoal: 40,
+        key: demoKey,
+        students,
+        updatedAt: Date.now()
+      };
+    }
+
+    let appState = {
+      exams: [],
+      activeExamId: null
+    };
+
+    let uiState = {
+      nav: 'pindai',
+      settingsTab: 'jenis', // jenis | kunci | lembar
+      resultsTab: 'peringkat', // peringkat | analisis | detail
+      detailSort: 'terbaru', // terbaru | nilai | nama
+      historyQuery: '',
+      draftExam: null,
+      draftSavedNotice: false,
+      cameraActive: false,
+      cameraStatus: 'Siap memindai lembar jawab',
+      scannedBatch: [], // Hasil pindai sementara sebelum disimpan
+      manualEdit: null, // { source: 'batch'|'saved', id: string }
+      keyScanMode: false
+    };
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && Array.isArray(parsed.exams)) {
+            appState = parsed;
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('Gagal memuat data:', e);
+      }
+      // Muat ujian contoh bawaan saat pertama kali dibuka
+      const demo = createDemoExam();
+      appState = {
+        exams: [demo],
+        activeExamId: demo.id
+      };
+      saveState();
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(appState));
+      } catch (e) {
+        showToast('Penyimpanan penuh, hapus riwayat lama');
+      }
+      updateNavBadge();
+    }
+
+    function getActiveExam() {
+      return appState.exams.find(e => e.id === appState.activeExamId) || null;
+    }
+
+    function showToast(msg) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(el._timer);
+      el._timer = setTimeout(() => el.classList.remove('show'), 2600);
+    }
+
+    function updateNavBadge() {
+      const exam = getActiveExam();
+      const badge = document.getElementById('navResultBadge');
+      if (exam && exam.students.length > 0) {
+        badge.textContent = exam.students.length;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+
+    /* ========================================================================
+       B. THEME & DAILY SPLASH SCREEN
+       ======================================================================== */
+    function applyTheme(theme) {
+      const root = document.documentElement;
+      const icon = document.getElementById('themeIcon');
+      if (theme === 'dark' || theme === 'light') {
+        root.setAttribute('data-theme', theme);
+        localStorage.setItem(THEME_KEY, theme);
+        icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+      } else {
+        root.removeAttribute('data-theme');
+        const sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        icon.textContent = sysDark ? '☀️' : '🌙';
+      }
+    }
+
+    function initThemeAndSplash() {
+      const savedTheme = localStorage.getItem(THEME_KEY);
+      applyTheme(savedTheme);
+
+      document.getElementById('btnToggleTheme').addEventListener('click', () => {
+        const current = document.documentElement.getAttribute('data-theme');
+        const sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDark = current ? current === 'dark' : sysDark;
+        applyTheme(isDark ? 'light' : 'dark');
+      });
+
+      const splash = document.getElementById('splashScreen');
+      const savedSplash = localStorage.getItem(SPLASH_KEY);
+      const today = todayLocalISO();
+
+      // Nilai lama '1' dianggap kedaluwarsa; hanya tampil sekali per hari
+      if (savedSplash !== today) {
+        splash.classList.remove('hidden');
+      }
+
+      const closeSplash = () => {
+        splash.classList.add('hidden');
+        localStorage.setItem(SPLASH_KEY, todayLocalISO());
+      };
+
+      document.getElementById('btnStartSplash').addEventListener('click', closeSplash);
+      document.getElementById('btnOpenSplash').addEventListener('click', () => {
+        splash.classList.remove('hidden');
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (!splash.classList.contains('hidden')) closeSplash();
+          if (!document.getElementById('manualModal').classList.contains('hidden')) {
+            closeManualModal();
+          }
+        }
+      });
+    }
+
+    /* ========================================================================
+       C. OMR ENGINE (HOMOGRAPHY, MARKER DETECTION & BUBBLE READER)
+       ======================================================================== */
+    // Ukuran standar kanvas satu lembar LJK (1/3 kertas A4/F4)
+    const SHEET_W = 600;
+    const SHEET_H = 850;
+
+    // Koordinat pusat 4 kotak hitam penanda pada kanvas standar
+    const DST_MARKERS = [
+      { x: 36, y: 36 },
+      { x: SHEET_W - 36, y: 36 },
+      { x: SHEET_W - 36, y: SHEET_H - 36 },
+      { x: 36, y: SHEET_H - 36 }
+    ];
+
+    /**
+     * Menghitung matriks homografi 3x3 dari 4 titik sumber ke 4 titik tujuan
+     */
+    function computeHomography(src, dst) {
+      const A = [];
+      const b = [];
+      for (let i = 0; i < 4; i++) {
+        const { x, y } = src[i];
+        const { x: u, y: v } = dst[i];
+        A.push([x, y, 1, 0, 0, 0, -u * x, -u * y]);
+        b.push(u);
+        A.push([0, 0, 0, x, y, 1, -v * x, -v * y]);
+        b.push(v);
+      }
+      // Eliminasi Gauss
+      const n = 8;
+      for (let i = 0; i < n; i++) {
+        let maxRow = i;
+        for (let k = i + 1; k < n; k++) {
+          if (Math.abs(A[k][i]) > Math.abs(A[maxRow][i])) maxRow = k;
+        }
+        [A[i], A[maxRow]] = [A[maxRow], A[i]];
+        [b[i], b[maxRow]] = [b[maxRow], b[i]];
+        if (Math.abs(A[i][i]) < 1e-9) return null;
+        for (let k = i + 1; k < n; k++) {
+          const factor = A[k][i] / A[i][i];
+          for (let j = i; j < n; j++) A[k][j] -= factor * A[i][j];
+          b[k] -= factor * b[i];
+        }
+      }
+      const h = new Array(9);
+      h[8] = 1;
+      for (let i = n - 1; i >= 0; i--) {
+        let sum = b[i];
+        for (let j = i + 1; j < n; j++) sum -= A[i][j] * h[j];
+        h[i] = sum / A[i][i];
+      }
+      return h;
+    }
+
+    function applyHomographyPoint(H, x, y) {
+      const w = H[6] * x + H[7] * y + H[8];
+      return {
+        x: (H[0] * x + H[1] * y + H[2]) / w,
+        y: (H[3] * x + H[4] * y + H[5]) / w
+      };
+    }
+
+    /**
+     * Deteksi komponen kotak hitam persegi (fiducial markers) pada citra grayscale
+     */
+    function findSquareMarkers(gray, w, h) {
+      // Adaptive thresholding sederhana berbasis integral image
+      const integral = new Uint32Array((w + 1) * (h + 1));
+      for (let y = 0; y < h; y++) {
+        let rowSum = 0;
+        for (let x = 0; x < w; x++) {
+          rowSum += gray[y * w + x];
+          integral[(y + 1) * (w + 1) + (x + 1)] = integral[y * (w + 1) + (x + 1)] + rowSum;
+        }
+      }
+
+      const bin = new Uint8Array(w * h);
+      const r = Math.max(12, Math.floor(Math.min(w, h) / 24));
+      for (let y = 0; y < h; y++) {
+        const y1 = Math.max(0, y - r);
+        const y2 = Math.min(h - 1, y + r);
+        for (let x = 0; x < w; x++) {
+          const x1 = Math.max(0, x - r);
+          const x2 = Math.min(w - 1, x + r);
+          const area = (x2 - x1 + 1) * (y2 - y1 + 1);
+          const sum = integral[(y2 + 1) * (w + 1) + (x2 + 1)]
+                    - integral[y1 * (w + 1) + (x2 + 1)]
+                    - integral[(y2 + 1) * (w + 1) + x1]
+                    + integral[y1 * (w + 1) + x1];
+          const mean = sum / area;
+          bin[y * w + x] = gray[y * w + x] < mean * 0.68 && gray[y * w + x] < 135 ? 1 : 0;
+        }
+      }
+
+      // Connected components BFS
+      const visited = new Uint8Array(w * h);
+      const blobs = [];
+      const queue = new Int32Array(w * h);
+      const minArea = Math.max(24, (w * h) * 0.00012);
+      const maxArea = (w * h) * 0.015;
+
+      for (let y = 2; y < h - 2; y++) {
+        for (let x = 2; x < w - 2; x++) {
+          const idx = y * w + x;
+          if (bin[idx] === 1 && !visited[idx]) {
+            let head = 0, tail = 0;
+            queue[tail++] = idx;
+            visited[idx] = 1;
+            let minX = x, maxX = x, minY = y, maxY = y;
+            let count = 0, sumX = 0, sumY = 0;
+
+            while (head < tail) {
+              const curr = queue[head++];
+              const cx = curr % w;
+              const cy = (curr / w) | 0;
+              count++;
+              sumX += cx;
+              sumY += cy;
+              if (cx < minX) minX = cx;
+              if (cx > maxX) maxX = cx;
+              if (cy < minY) minY = cy;
+              if (cy > maxY) maxY = cy;
+
+              const neighbors = [curr - 1, curr + 1, curr - w, curr + w];
+              for (let k = 0; k < 4; k++) {
+                const nIdx = neighbors[k];
+                if (nIdx >= 0 && nIdx < w * h && bin[nIdx] === 1 && !visited[nIdx]) {
+                  visited[nIdx] = 1;
+                  queue[tail++] = nIdx;
+                }
+              }
+            }
+
+            if (count >= minArea && count <= maxArea) {
+              const bw = maxX - minX + 1;
+              const bh = maxY - minY + 1;
+              const aspect = bw / bh;
+              const fill = count / (bw * bh);
+              // Kotak hitam penanda memiliki rasio aspek mendekati 1 dan kepadatan tinggi
+              if (aspect >= 0.65 && aspect <= 1.45 && fill >= 0.62) {
+                blobs.push({
+                  x: sumX / count,
+                  y: sumY / count,
+                  size: (bw + bh) / 2,
+                  area: count
+                });
+              }
+            }
+          }
+        }
+      }
+      return blobs;
+    }
+
+    /**
+     * Mengelompokkan kandidat penanda menjadi 1 hingga 3 lembar LJK (masing-masing 4 sudut)
+     */
+    function groupMarkersIntoSheets(markers, imgW, imgH) {
+      if (markers.length < 4) return [];
+      const used = new Set();
+      const sheets = [];
+
+      // Urutkan dari kiri atas
+      const sorted = [...markers].sort((a, b) => (a.x + a.y * 0.3) - (b.x + b.y * 0.3));
+
+      for (let i = 0; i < sorted.length; i++) {
+        if (used.has(i)) continue;
+        const tl = sorted[i];
+
+        // Cari kandidat Top-Right (TR) di sebelah kanan tl
+        let bestTR = -1, bestTRScore = Infinity;
+        for (let j = 0; j < sorted.length; j++) {
+          if (i === j || used.has(j)) continue;
+          const p = sorted[j];
+          const dx = p.x - tl.x;
+          const dy = p.y - tl.y;
+          if (dx > imgW * 0.14 && Math.abs(dy) < dx * 0.35) {
+            const sizeDiff = Math.abs(p.size - tl.size) / tl.size;
+            if (sizeDiff < 0.45 && dx < bestTRScore) {
+              bestTRScore = dx;
+              bestTR = j;
+            }
+          }
+        }
+        if (bestTR === -1) continue;
+        const tr = sorted[bestTR];
+        const sheetWidth = Math.hypot(tr.x - tl.x, tr.y - tl.y);
+        const expectedHeight = sheetWidth * (SHEET_H / SHEET_W);
+
+        // Cari kandidat Bottom-Left (BL) dan Bottom-Right (BR)
+        let bestBL = -1, bestBLDist = Infinity;
+        let bestBR = -1, bestBRDist = Infinity;
+
+        for (let k = 0; k < sorted.length; k++) {
+          if (k === i || k === bestTR || used.has(k)) continue;
+          const p = sorted[k];
+          const expBLx = tl.x - (tr.y - tl.y) * (SHEET_H / SHEET_W);
+          const expBLy = tl.y + (tr.x - tl.x) * (SHEET_H / SHEET_W);
+          const dBL = Math.hypot(p.x - expBLx, p.y - expBLy);
+          if (dBL < expectedHeight * 0.25 && dBL < bestBLDist) {
+            bestBLDist = dBL;
+            bestBL = k;
+          }
+
+          const expBRx = tr.x - (tr.y - tl.y) * (SHEET_H / SHEET_W);
+          const expBRy = tr.y + (tr.x - tl.x) * (SHEET_H / SHEET_W);
+          const dBR = Math.hypot(p.x - expBRx, p.y - expBRy);
+          if (dBR < expectedHeight * 0.25 && dBR < bestBRDist) {
+            bestBRDist = dBR;
+            bestBR = k;
+          }
+        }
+
+        if (bestBL !== -1 && bestBR !== -1 && bestBL !== bestBR) {
+          used.add(i);
+          used.add(bestTR);
+          used.add(bestBR);
+          used.add(bestBL);
+          sheets.push([tl, tr, sorted[bestBR], sorted[bestBL]]);
+        }
+      }
+
+      // Urutkan lembar dari kiri ke kanan
+      sheets.sort((a, b) => a[0].x - b[0].x);
+      return sheets.slice(0, 3);
+    }
+
+    /**
+     * Koordinat posisi tiap gelembung soal (1..50, pilihan A..D) pada kanvas SHEET_W x SHEET_H
+     * Tata letak: 5 kolom x 10 baris soal (total 50 soal)
+     */
+    function getBubbleLayout(qIndex, choiceIndex) {
+      const col = Math.floor(qIndex / 10); // 0..4
+      const row = qIndex % 10;             // 0..9
+      const colStartX = 68 + col * 104;
+      const startY = 230 + row * 56;
+      const bx = colStartX + 24 + choiceIndex * 18;
+      const by = startY;
+      return { x: bx, y: by, r: 6.5 };
+    }
+
+    /**
+     * Luruskan lembar via homografi dan baca seluruh 50 soal dengan normalisasi kertas sekitar
+     */
+    function warpAndReadSheet(srcCanvas, corners, jumlahSoal) {
+      const H = computeHomography(DST_MARKERS, corners);
+      if (!H) return null;
+
+      const srcCtx = srcCanvas.getContext('2d');
+      const sw = srcCanvas.width;
+      const sh = srcCanvas.height;
+      const srcData = srcCtx.getImageData(0, 0, sw, sh).data;
+
+      const outCanvas = document.createElement('canvas');
+      outCanvas.width = SHEET_W;
+      outCanvas.height = SHEET_H;
+      const outCtx = outCanvas.getContext('2d');
+      const outImg = outCtx.createImageData(SHEET_W, SHEET_H);
+      const outData = outImg.data;
+      const warpedGray = new Float32Array(SHEET_W * SHEET_H);
+
+      for (let y = 0; y < SHEET_H; y++) {
+        for (let x = 0; x < SHEET_W; x++) {
+          const pt = applyHomographyPoint(H, x, y);
+          const sx = Math.round(pt.x);
+          const sy = Math.round(pt.y);
+          const oIdx = (y * SHEET_W + x) * 4;
+          if (sx >= 0 && sx < sw && sy >= 0 && sy < sh) {
+            const sIdx = (sy * sw + sx) * 4;
+            const r = srcData[sIdx], g = srcData[sIdx + 1], b = srcData[sIdx + 2];
+            outData[oIdx] = r;
+            outData[oIdx + 1] = g;
+            outData[oIdx + 2] = b;
+            outData[oIdx + 3] = 255;
+            warpedGray[y * SHEET_W + x] = 0.299 * r + 0.587 * g + 0.114 * b;
+          } else {
+            outData[oIdx] = 255; outData[oIdx + 1] = 255; outData[oIdx + 2] = 255; outData[oIdx + 3] = 255;
+            warpedGray[y * SHEET_W + x] = 255;
+          }
+        }
+      }
+      outCtx.putImageData(outImg, 0, 0);
+
+      const answers = [];
+      const statuses = [];
+
+      for (let q = 0; q < 50; q++) {
+        if (q >= jumlahSoal) {
+          answers.push('');
+          statuses.push('skip');
+          continue;
+        }
+
+        // Ukur tingkat kecerahan kertas putih di sekitar baris soal ini (normalisasi bayangan)
+        const refPos = getBubbleLayout(q, 0);
+        let paperSum = 0, paperCnt = 0;
+        for (let dy = -16; dy <= 16; dy += 4) {
+          for (let dx = -12; dx <= 75; dx += 5) {
+            // Hindari pusat gelembung
+            let nearBubble = false;
+            for (let c = 0; c < 4; c++) {
+              const b = getBubbleLayout(q, c);
+              if (Math.hypot(refPos.x + dx - b.x, refPos.y + dy - b.y) < 8.5) nearBubble = true;
+            }
+            if (!nearBubble) {
+              const px = Math.round(refPos.x + dx);
+              const py = Math.round(refPos.y + dy);
+              if (px >= 0 && px < SHEET_W && py >= 0 && py < SHEET_H) {
+                paperSum += warpedGray[py * SHEET_W + px];
+                paperCnt++;
+              }
+            }
+          }
+        }
+        const localPaper = paperCnt > 0 ? paperSum / paperCnt : 220;
+
+        // Hitung rasio kegelapan tiap gelembung A-D relatif terhadap kertas sekitar
+        const darkness = [];
+        for (let c = 0; c < 4; c++) {
+          const b = getBubbleLayout(q, c);
+          let sum = 0, cnt = 0;
+          const rad = 5;
+          for (let dy = -rad; dy <= rad; dy++) {
+            for (let dx = -rad; dx <= rad; dx++) {
+              if (dx * dx + dy * dy <= rad * rad) {
+                const px = Math.round(b.x + dx);
+                const py = Math.round(b.y + dy);
+                sum += warpedGray[py * SHEET_W + px];
+                cnt++;
+              }
+            }
+          }
+          const meanBubble = sum / cnt;
+          const normDark = Math.max(0, (localPaper - meanBubble) / Math.max(localPaper, 60));
+          darkness.push({ choice: CHOICES[c], val: normDark, pos: b });
+        }
+
+        const sortedD = [...darkness].sort((a, b) => b.val - a.val);
+        const top1 = sortedD[0];
+        const top2 = sortedD[1];
+
+        // Ambang batas terkalibrasi (lingkaran kosong biasanya ~0.08-0.18, terisi ~0.38-0.75)
+        const FILL_THRESHOLD = 0.30;
+        const UNCERTAIN_LOW = 0.23;
+
+        if (top1.val < UNCERTAIN_LOW) {
+          answers.push('');
+          statuses.push('kosong');
+        } else if (top1.val >= FILL_THRESHOLD && top2.val >= FILL_THRESHOLD && (top1.val - top2.val) < 0.14) {
+          // Lebih dari satu gelembung terisi -> Ganda
+          answers.push(top1.choice + top2.choice);
+          statuses.push('ganda');
+        } else if (top1.val < FILL_THRESHOLD || (top1.val - top2.val) < 0.08) {
+          // Ragu-ragu -> wajib ditandai "cek ulang" agar guru memeriksa
+          answers.push(top1.choice);
+          statuses.push('cek');
+        } else {
+          answers.push(top1.choice);
+          statuses.push('ok');
+        }
+      }
+
+      // Gambar penanda visual pada kanvas hasil lurus
+      drawMarkersOnPreview(outCtx, answers, statuses, jumlahSoal);
+
+      return {
+        answers,
+        statuses,
+        previewDataUrl: outCanvas.toDataURL('image/jpeg', 0.78)
+      };
+    }
+
+    function drawMarkersOnPreview(ctx, answers, statuses, jumlahSoal) {
+      ctx.lineWidth = 2.5;
+      for (let q = 0; q < jumlahSoal; q++) {
+        const ans = answers[q];
+        const st = statuses[q];
+        for (let c = 0; c < 4; c++) {
+          const b = getBubbleLayout(q, c);
+          if (ans && ans.includes(CHOICES[c])) {
+            ctx.strokeStyle = st === 'cek' || st === 'ganda' ? '#F59E0B' : '#0284C7';
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, 8.5, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    /**
+     * Memproses sebuah HTMLImageElement / HTMLCanvasElement / HTMLVideoElement
+     */
+    function processImageSource(sourceEl, jumlahSoal) {
+      const maxDim = 1400;
+      const sw = sourceEl.videoWidth || sourceEl.naturalWidth || sourceEl.width;
+      const sh = sourceEl.videoHeight || sourceEl.naturalHeight || sourceEl.height;
+      const scale = Math.min(1, maxDim / Math.max(sw, sh));
+      const w = Math.round(sw * scale);
+      const h = Math.round(sh * scale);
+
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(sourceEl, 0, 0, w, h);
+
+      const imgData = ctx.getImageData(0, 0, w, h).data;
+      const gray = new Uint8Array(w * h);
+      for (let i = 0; i < w * h; i++) {
+        gray[i] = (0.299 * imgData[i * 4] + 0.587 * imgData[i * 4 + 1] + 0.114 * imgData[i * 4 + 2]) | 0;
+      }
+
+      const markers = findSquareMarkers(gray, w, h);
+      const sheetGroups = groupMarkersIntoSheets(markers, w, h);
+
+      const results = [];
+      for (const corners of sheetGroups) {
+        const res = warpAndReadSheet(canvas, corners, jumlahSoal);
+        if (res) results.push(res);
+      }
+
+      return { markers, sheetGroups, results, width: w, height: h };
+    }
+
+    /**
+     * Generator Foto Uji Sintetis (3 Lembar sekaligus dengan kemiringan & bayangan)
+     */
+    function generateSyntheticTestPhoto(exam) {
+      const sheetCount = 3;
+      const singleW = 420;
+      const singleH = 595;
+      const totalW = singleW * sheetCount + 80;
+      const totalH = singleH + 80;
+
+      const sheetCanvas = document.createElement('canvas');
+      sheetCanvas.width = totalW;
+      sheetCanvas.height = totalH;
+      const ctx = sheetCanvas.getContext('2d');
+
+      // Latar meja kayu / abu-abu
+      ctx.fillStyle = '#8B9AA8';
+      ctx.fillRect(0, 0, totalW, totalH);
+
+      for (let s = 0; s < sheetCount; s++) {
+        ctx.save();
+        const ox = 25 + s * (singleW + 15);
+        const oy = 35;
+        // Sedikit rotasi perspektif ringan per lembar
+        ctx.translate(ox + singleW / 2, oy + singleH / 2);
+        ctx.rotate(((s - 1) * 1.4 * Math.PI) / 180);
+        ctx.translate(-singleW / 2, -singleH / 2);
+
+        // Kertas putih dengan gradien cahaya tidak merata
+        const grad = ctx.createLinearGradient(0, 0, singleW, singleH);
+        grad.addColorStop(0, '#FFFFFF');
+        grad.addColorStop(0.65, '#F3F4F6');
+        grad.addColorStop(1, '#DCE1E7');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, singleW, singleH);
+
+        const scaleX = singleW / SHEET_W;
+        const scaleY = singleH / SHEET_H;
+
+        // 4 Kotak Hitam Penanda di Sudut
+        ctx.fillStyle = '#090D12';
+        const mSize = 22 * scaleX;
+        DST_MARKERS.forEach(m => {
+          ctx.fillRect(m.x * scaleX - mSize / 2, m.y * scaleY - mSize / 2, mSize, mSize);
+        });
+
+        // Header Lembar
+        ctx.fillStyle = '#1E293B';
+        ctx.font = 'bold 12px sans-serif';
+        ctx.fillText(`LEMBAR JAWAB UJIAN (${s + 1}/3)`, 45, 42);
+        ctx.strokeStyle = '#64748B';
+        ctx.strokeRect(45, 54, singleW - 90, 48);
+        ctx.font = '10px sans-serif';
+        ctx.fillText('Nama: Siswa Uji #' + (s + 1), 54, 74);
+
+        // Gambar 50 soal & gelembung A-D
+        for (let q = 0; q < 50; q++) {
+          const b0 = getBubbleLayout(q, 0);
+          ctx.fillStyle = '#334155';
+          ctx.font = 'bold 8px sans-serif';
+          ctx.fillText(String(q + 1).padStart(2, '0'), (b0.x - 19) * scaleX, (b0.y + 3) * scaleY);
+
+          // Tentukan kunci sintetis (lembar 1 nilai 100, lembar 2 nilai 85, lembar 3 ada 1 ragu-ragu)
+          const targetChoice = exam && exam.key[q] ? exam.key[q] : CHOICES[q % 4];
+          let chosen = targetChoice;
+          if (s === 1 && q % 6 === 0 && q < exam.jumlahSoal) {
+            chosen = CHOICES[(CHOICES.indexOf(targetChoice) + 1) % 4];
+          }
+
+          for (let c = 0; c < 4; c++) {
+            const b = getBubbleLayout(q, c);
+            const cx = b.x * scaleX;
+            const cy = b.y * scaleY;
+            const cr = b.r * scaleX;
+
+            ctx.beginPath();
+            ctx.arc(cx, cy, cr, 0, Math.PI * 2);
+            ctx.strokeStyle = '#475569';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            if (q < (exam ? exam.jumlahSoal : 40) && CHOICES[c] === chosen) {
+              // Simulasi arsiran pensil 2B
+              ctx.fillStyle = (s === 2 && q === 4) ? 'rgba(30,35,40,0.42)' : '#111827';
+              ctx.fill();
+            }
+          }
+        }
+        ctx.restore();
+      }
+
+      return sheetCanvas;
+    }
+
+    /* ========================================================================
+       D. SCORING & EVALUATION
+       ======================================================================== */
+    function evaluateAnswers(answers, key, jumlahSoal) {
+      let benar = 0, salah = 0, kosong = 0;
+      for (let i = 0; i < jumlahSoal; i++) {
+        const ans = (answers[i] || '').trim();
+        const k = (key[i] || '').trim();
+        if (!ans) {
+          kosong++;
+        } else if (ans.length === 1 && ans === k) {
+          benar++;
+        } else {
+          salah++;
+        }
+      }
+      const score = jumlahSoal > 0 ? Math.round((benar / jumlahSoal) * 1000) / 10 : 0;
+      return { benar, salah, kosong, score };
+    }
+
+    /* ========================================================================
+       E. CAMERA CONTROLLER (LIVE AUTO-CAPTURE & MANUAL SHUTTER)
+       ======================================================================== */
+    let cameraStream = null;
+    let scanLoopTimer = null;
+    let stableFrames = 0;
+
+    async function startCamera() {
+      const exam = getActiveExam();
+      if (!exam) {
+        showToast('Buat jenis ujian dan kunci jawaban dulu');
+        navigateTo('pengaturan');
+        return;
+      }
+
+      try {
+        cameraStream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 960 } },
+          audio: false
+        });
+        uiState.cameraActive = true;
+        uiState.cameraStatus = 'Arahkan kamera ke lembar jawab…';
+        stableFrames = 0;
+        renderApp();
+
+        const video = document.getElementById('liveVideo');
+        if (video) {
+          video.srcObject = cameraStream;
+          await video.play();
+          runAutoDetectLoop();
+        }
+      } catch (err) {
+        stopCamera();
+        showToast('Kamera tidak tersedia, pilih foto dari galeri');
+        document.getElementById('galleryInput').click();
+      }
+    }
+
+    function stopCamera() {
+      if (scanLoopTimer) {
+        clearInterval(scanLoopTimer);
+        scanLoopTimer = null;
+      }
+      if (cameraStream) {
+        cameraStream.getTracks().forEach(t => t.stop());
+        cameraStream = null;
+      }
+      uiState.cameraActive = false;
+    }
+
+    function runAutoDetectLoop() {
+      scanLoopTimer = setInterval(() => {
+        const video = document.getElementById('liveVideo');
+        const overlay = document.getElementById('liveOverlay');
+        const statusEl = document.getElementById('camStatusText');
+        if (!video || !overlay || video.readyState < 2) return;
+
+        const vw = video.videoWidth;
+        const vh = video.videoHeight;
+        overlay.width = vw;
+        overlay.height = vh;
+        const oCtx = overlay.getContext('2d');
+        oCtx.clearRect(0, 0, vw, vh);
+
+        // Bingkai bantu sudut
+        oCtx.strokeStyle = 'rgba(56, 189, 248, 0.7)';
+        oCtx.lineWidth = 4;
+        const padX = vw * 0.07, padY = vh * 0.08;
+        oCtx.strokeRect(padX, padY, vw - padX * 2, vh - padY * 2);
+
+        const exam = getActiveExam();
+        const scan = processImageSource(video, exam ? exam.jumlahSoal : 40);
+        const scaleX = vw / scan.width;
+        const scaleY = vh / scan.height;
+
+        // Gambar kotak hijau pada lembar yang terdeteksi
+        scan.sheetGroups.forEach(group => {
+          oCtx.strokeStyle = '#22C55E';
+          oCtx.lineWidth = 5;
+          oCtx.beginPath();
+          group.forEach((pt, idx) => {
+            if (idx === 0) oCtx.moveTo(pt.x * scaleX, pt.y * scaleY);
+            else oCtx.lineTo(pt.x * scaleX, pt.y * scaleY);
+          });
+          oCtx.closePath();
+          oCtx.stroke();
+        });
+
+        const count = scan.results.length;
+        if (count > 0) {
+          stableFrames++;
+          if (statusEl) {
+            statusEl.textContent = `${count} lembar terdeteksi, tahan HP agar tidak bergerak (${stableFrames}/3)`;
+          }
+          if (stableFrames >= 3) {
+            captureFromVideo(scan.results);
+          }
+        } else {
+          stableFrames = 0;
+          if (statusEl) {
+            statusEl.textContent = scan.markers.length > 0
+              ? 'Jauhkan sedikit agar semua 4 kotak sudut lembar masuk'
+              : 'Pastikan 4 kotak hitam di sudut lembar terlihat jelas';
+          }
+        }
+      }, 450);
+    }
+
+    function captureFromVideo(precomputedResults = null) {
+      const video = document.getElementById('liveVideo');
+      const exam = getActiveExam();
+      if (!video || !exam) return;
+
+      const results = precomputedResults || processImageSource(video, exam.jumlahSoal).results;
+      stopCamera();
+
+      if (results.length === 0) {
+        showToast('Lembar belum terbaca, pastikan 4 kotak sudut terlihat');
+        renderApp();
+        return;
+      }
+      addScannedResultsToBatch(results);
+    }
+
+    function addScannedResultsToBatch(results) {
+      const exam = getActiveExam();
+      const baseNum = exam.students.length + uiState.scannedBatch.length + 1;
+      results.forEach((res, idx) => {
+        const evalRes = evaluateAnswers(res.answers, exam.key, exam.jumlahSoal);
+        const cekCount = res.statuses.filter(s => s === 'cek' || s === 'ganda').length;
+        uiState.scannedBatch.push({
+          id: uid(),
+          nama: `Siswa ${baseNum + idx}`,
+          answers: res.answers,
+          statuses: res.statuses,
+          score: evalRes.score,
+          benar: evalRes.benar,
+          salah: evalRes.salah,
+          kosong: evalRes.kosong,
+          cek: cekCount,
+          previewDataUrl: res.previewDataUrl
+        });
+      });
+      showToast(`${results.length} lembar berhasil dipindai`);
+      renderApp();
+    }
+
+    /* ========================================================================
+       F. MANUAL CORRECTION PANEL
+       ======================================================================== */
+    function openManualModal(source, id) {
+      uiState.manualEdit = { source, id };
+      renderManualModal();
+      document.getElementById('manualModal').classList.remove('hidden');
+    }
+
+    function closeManualModal() {
+      uiState.manualEdit = null;
+      document.getElementById('manualModal').classList.add('hidden');
+    }
+
+    function renderManualModal() {
+      if (!uiState.manualEdit) return;
+      const exam = getActiveExam();
+      if (!exam) return;
+
+      const { source, id } = uiState.manualEdit;
+      const item = source === 'batch'
+        ? uiState.scannedBatch.find(x => x.id === id)
+        : exam.students.find(x => x.id === id);
+
+      if (!item) return closeManualModal();
+
+      const evalRes = evaluateAnswers(item.answers, exam.key, exam.jumlahSoal);
+      item.score = evalRes.score;
+      item.benar = evalRes.benar;
+      item.salah = evalRes.salah;
+      item.kosong = evalRes.kosong;
+      item.cek = item.statuses.filter(s => s === 'cek' || s === 'ganda').length;
+
+      const modalEl = document.getElementById('manualModalContent');
+      modalEl.innerHTML = `
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;">
+          <div>
+            <div style="font-size:18px;font-weight:800;">Koreksi Manual</div>
+            <div style="font-size:13px;color:var(--text-muted);">${escapeHtml(item.nama)} · Nilai: <strong>${item.score}</strong></div>
+          </div>
+          <button id="btnCloseManual" class="btn btn-soft btn-sm">Tutup</button>
+        </div>
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
+          <span class="ans-pill ans-benar">Benar: ${item.benar}</span>
+          <span class="ans-pill ans-salah">Salah: ${item.salah}</span>
+          <span class="ans-pill ans-kosong">Kosong: ${item.kosong}</span>
+          ${item.cek > 0 ? `<span class="ans-pill ans-cek">Cek Ulang: ${item.cek}</span>` : ''}
+        </div>
+
+        ${item.previewDataUrl ? `
+          <details style="margin-bottom:14px;background:var(--bg-card-alt);padding:10px 14px;border-radius:16px;">
+            <summary style="font-size:13px;font-weight:700;cursor:pointer;">Lihat Foto Lembar Terdeteksi</summary>
+            <img src="${item.previewDataUrl}" alt="Pratinjau Lembar" style="width:100%;max-height:320px;object-fit:contain;border-radius:12px;margin-top:10px;" />
+          </details>
+        ` : ''}
+
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px;">
+          Ketuk nomor soal untuk memutar jawaban: <strong>A → B → C → D → Kosong</strong>
+        </p>
+
+        <div class="key-grid">
+          ${Array.from({ length: exam.jumlahSoal }, (_, q) => {
+            const ans = item.answers[q] || '—';
+            const k = exam.key[q] || '';
+            const st = item.statuses[q];
+            let cls = 'ans-kosong';
+            if (st === 'cek') cls = 'ans-cek';
+            else if (st === 'ganda') cls = 'ans-ganda';
+            else if (item.answers[q]) cls = item.answers[q] === k ? 'ans-benar' : 'ans-salah';
+
+            return `
+              <button type="button" class="key-cell ${cls}" data-cycle-q="${q}" style="border:none;">
+                <span class="key-num">${q + 1}</span>
+                <span>${ans}</span>
+              </button>
+            `;
+          }).join('')}
+        </div>
+      `;
+
+      document.getElementById('btnCloseManual').addEventListener('click', closeManualModal);
+      modalEl.querySelectorAll('[data-cycle-q]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const q = Number(btn.getAttribute('data-cycle-q'));
+          const cycle = ['A', 'B', 'C', 'D', ''];
+          const cur = item.answers[q] && item.answers[q].length === 1 ? item.answers[q] : '';
+          const next = cycle[(cycle.indexOf(cur) + 1) % cycle.length];
+          item.answers[q] = next;
+          item.statuses[q] = next ? 'ok' : 'kosong';
+          if (source === 'saved') saveState();
+          renderManualModal();
+          renderApp();
+        });
+      });
+    }
+
+    /* ========================================================================
+       G. NAVIGATION & VIEW RENDERERS
+       ======================================================================== */
+    function navigateTo(navName) {
+      if (uiState.nav === 'pindai' && navName !== 'pindai') {
+        stopCamera();
+      }
+      uiState.nav = navName;
+      document.querySelectorAll('.nav-item').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-nav') === navName);
+      });
+      renderApp();
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    function renderApp() {
+      updateNavBadge();
+      const container = document.getElementById('viewContainer');
+      if (uiState.nav === 'pengaturan') renderPengaturan(container);
+      else if (uiState.nav === 'pindai') renderPindai(container);
+      else if (uiState.nav === 'hasil') renderHasil(container);
+      else if (uiState.nav === 'riwayat') renderRiwayat(container);
+    }
+
+    /* ------------------------------------------------------------------------
+       VIEW 1: PENGATURAN (Jenis Ujian, Kunci Jawaban, Lembar Jawab)
+       ------------------------------------------------------------------------ */
+    function renderPengaturan(container) {
+      const activeExam = getActiveExam();
+      const currentData = uiState.draftExam || activeExam || {
+        id: null,
+        jenis: 'Sumatif Ganjil',
+        mapel: '',
+        kelas: '',
+        jumlahSoal: 40,
+        key: Array(50).fill('')
+      };
+
+      const filledKeyCount = currentData.key.slice(0, currentData.jumlahSoal).filter(Boolean).length;
+
+      container.innerHTML = `
+        <div class="page-header">
+          <h2 class="page-title">Pengaturan Ujian</h2>
+          ${appState.exams.length === 0 ? `
+            <button id="btnLoadDemo" class="btn btn-soft btn-sm">Beralih ke ujian contoh</button>
+          ` : ''}
+        </div>
+
+        <div class="sub-tabs" role="tablist">
+          <button class="sub-tab ${uiState.settingsTab === 'jenis' ? 'active' : ''}" data-stab="jenis">Jenis Ujian</button>
+          <button class="sub-tab ${uiState.settingsTab === 'kunci' ? 'active' : ''}" data-stab="kunci">Kunci Jawaban</button>
+          <button class="sub-tab ${uiState.settingsTab === 'lembar' ? 'active' : ''}" data-stab="lembar">Lembar Jawab</button>
+        </div>
+
+        ${uiState.settingsTab === 'jenis' ? `
+          <div class="bento-grid desktop-two-col">
+            <div class="bento-card">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+                <div style="font-weight:800;font-size:17px;">
+                  ${uiState.draftExam ? 'Buat Ujian Baru (Draf)' : 'Identitas Ujian Aktif'}
+                </div>
+                <button id="btnNewExamDraft" class="btn btn-soft btn-sm" title="Buat ujian baru">+ Baru</button>
+              </div>
+
+              ${appState.exams.length > 0 ? `
+                <div class="field-group">
+                  <label class="field-label" for="selExistingExam">Pilih Ujian Tersimpan</label>
+                  <select id="selExistingExam" class="input-box">
+                    ${uiState.draftExam ? `<option value="__draft__" selected>-- Draf Ujian Baru --</option>` : ''}
+                    ${appState.exams.map(ex => `
+                      <option value="${ex.id}" ${!uiState.draftExam && ex.id === activeExam?.id ? 'selected' : ''}>
+                        ${escapeHtml(ex.jenis)} · ${escapeHtml(ex.mapel || 'Tanpa Mapel')} (${escapeHtml(ex.kelas || '-')})
+                      </option>
+                    `).join('')}
+                  </select>
+                </div>
+              ` : ''}
+
+              <div class="field-group">
+                <label class="field-label" for="inpJenis">Jenis Ujian</label>
+                <select id="inpJenis" class="input-box">
+                  ${JENIS_UJIAN_LIST.map(j => `<option value="${j}" ${currentData.jenis === j ? 'selected' : ''}>${j}</option>`).join('')}
+                </select>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="inpMapel">Mata Pelajaran</label>
+                <input id="inpMapel" type="text" class="input-box" placeholder="Contoh: Informatika / IPA" value="${escapeHtml(currentData.mapel)}" />
+              </div>
+
+              <div class="field-group">
+                <label class="field-label" for="inpKelas">Kelas</label>
+                <input id="inpKelas" type="text" class="input-box" placeholder="Contoh: VII A" value="${escapeHtml(currentData.kelas)}" />
+              </div>
+
+              <div class="field-group">
+                <label class="field-label">Jumlah Soal</label>
+                <div class="btn-row">
+                  <button type="button" class="btn ${currentData.jumlahSoal === 40 ? 'btn-hero' : 'btn-soft'}" data-qcount="40">40 Soal</button>
+                  <button type="button" class="btn ${currentData.jumlahSoal === 50 ? 'btn-hero' : 'btn-soft'}" data-qcount="50">50 Soal</button>
+                </div>
+              </div>
+
+              <div class="btn-row" style="margin-top:16px;">
+                ${!uiState.draftSavedNotice ? `
+                  <button id="btnSaveExamMeta" class="btn btn-primary">Simpan Jenis Ujian</button>
+                ` : ''}
+                <button id="btnGoToKunci" class="btn btn-hero">Lanjut ke Kunci Jawaban →</button>
+              </div>
+            </div>
+
+            <div class="bento-card bento-pastel-blue">
+              <div style="font-weight:800;font-size:17px;margin-bottom:8px;">Ujian Contoh Bawaan</div>
+              <p style="font-size:14px;color:var(--text-muted);margin-bottom:14px;">
+                Ingin langsung mencoba fitur pemindaian, peringkat, dan analisis butir soal? Muat ujian contoh berisi 40 soal dan 14 data siswa simulasi.
+              </p>
+              <button id="btnSwitchDemo" class="btn btn-hero btn-sm">Beralih ke ujian contoh</button>
+            </div>
+          </div>
+        ` : ''}
+
+        ${uiState.settingsTab === 'kunci' ? `
+          <div class="bento-card">
+            <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;">
+              <div>
+                <div style="font-weight:800;font-size:17px;">Kunci Jawaban (${filledKeyCount} / ${currentData.jumlahSoal})</div>
+                <div style="font-size:13px;color:var(--text-muted);">Ketuk kotak nomor untuk memutar A → B → C → D</div>
+              </div>
+              <div class="btn-row">
+                <button id="btnPasteKey" class="btn btn-soft btn-sm">Tempel Teks</button>
+                <button id="btnScanKeyPhoto" class="btn btn-soft btn-sm">Foto Kunci</button>
+                <button id="btnClearKey" class="btn btn-danger btn-sm">Kosongkan</button>
+              </div>
+            </div>
+
+            <div style="height:8px;background:var(--bg-card-alt);border-radius:999px;overflow:hidden;margin-bottom:16px;">
+              <div style="height:100%;width:${Math.round((filledKeyCount / currentData.jumlahSoal) * 100)}%;background:var(--accent-primary);transition:width 0.25s;"></div>
+            </div>
+
+            <div class="key-grid">
+              ${Array.from({ length: 50 }, (_, i) => {
+                const disabled = i >= currentData.jumlahSoal;
+                const val = currentData.key[i] || '—';
+                return `
+                  <button type="button" class="key-cell ${currentData.key[i] && !disabled ? 'filled' : ''}"
+                    data-key-idx="${i}" ${disabled ? 'disabled style="opacity:0.35;"' : ''}>
+                    <span class="key-num">${i + 1}</span>
+                    <span>${disabled ? '×' : val}</span>
+                  </button>
+                `;
+              }).join('')}
+            </div>
+
+            <div class="btn-row" style="margin-top:20px;">
+              <button id="btnSaveAndScan" class="btn btn-primary">Simpan &amp; Lanjut ke Pindai →</button>
+            </div>
+          </div>
+        ` : ''}
+
+        ${uiState.settingsTab === 'lembar' ? `
+          <div class="bento-grid desktop-two-col">
+            <div class="bento-card">
+              <div style="font-weight:800;font-size:17px;margin-bottom:8px;">Format Cetak Lembar Jawab</div>
+              <p style="font-size:14px;color:var(--text-muted);margin-bottom:14px;">
+                Satu halaman kertas A4 atau F4 memuat <strong>3 lembar jawab</strong> (masing-masing 50 soal A–D dan 4 kotak hitam di sudut). Anda dapat memindai 1 kertas utuh sekaligus atau satuan setelah dipotong.
+              </p>
+              <div class="btn-row">
+                <a href="lembar/ljk-a4.pdf" download="LJK-A4-3Lembar.pdf" class="btn btn-hero">Unduh A4</a>
+                <a href="lembar/ljk-f4.pdf" download="LJK-F4-3Lembar.pdf" class="btn btn-primary">Unduh F4</a>
+              </div>
+            </div>
+
+            <div class="bento-card bento-pastel-yellow">
+              <div style="font-weight:800;font-size:16px;margin-bottom:6px;">Tips Pencetakan &amp; Pengisian</div>
+              <ul style="font-size:13px;color:var(--text-muted);padding-left:18px;display:grid;gap:6px;">
+                <li>Cetak dengan skala <strong>100% (Actual Size)</strong> agar 4 kotak sudut tidak terpotong.</li>
+                <li>Gunakan pensil 2B atau pulpen hitam agar bulatan terbaca kontras.</li>
+                <li>Pastikan keempat kotak sudut tidak tertutup jari saat difoto.</li>
+              </ul>
+            </div>
+          </div>
+        ` : ''}
+      `;
+
+      // Sub-tab switching
+      container.querySelectorAll('[data-stab]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          uiState.settingsTab = btn.getAttribute('data-stab');
+          renderApp();
+        });
+      });
+
+      const loadDemoHandler = () => {
+        let demo = appState.exams.find(e => e.id === 'exam-demo-smpn1');
+        if (!demo) {
+          demo = createDemoExam();
+          appState.exams.unshift(demo);
+        }
+        appState.activeExamId = demo.id;
+        uiState.draftExam = null;
+        saveState();
+        showToast('Beralih ke ujian contoh');
+        renderApp();
+      };
+
+      document.getElementById('btnLoadDemo')?.addEventListener('click', loadDemoHandler);
+      document.getElementById('btnSwitchDemo')?.addEventListener('click', loadDemoHandler);
+
+      if (uiState.settingsTab === 'jenis') {
+        document.getElementById('btnNewExamDraft')?.addEventListener('click', () => {
+          uiState.draftExam = {
+            id: uid(),
+            jenis: 'Sumatif Ganjil',
+            mapel: '',
+            kelas: '',
+            jumlahSoal: 40,
+            key: Array(50).fill(''),
+            students: [],
+            updatedAt: Date.now()
+          };
+          uiState.draftSavedNotice = false;
+          renderApp();
+        });
+
+        document.getElementById('selExistingExam')?.addEventListener('change', (e) => {
+          const val = e.target.value;
+          if (val !== '__draft__') {
+            uiState.draftExam = null;
+            uiState.draftSavedNotice = false;
+            appState.activeExamId = val;
+            saveState();
+            renderApp();
+          }
+        });
+
+        container.querySelectorAll('[data-qcount]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const count = Number(btn.getAttribute('data-qcount'));
+            currentData.jumlahSoal = count;
+            uiState.draftSavedNotice = false;
+            if (!uiState.draftExam && activeExam) saveState();
+            renderApp();
+          });
+        });
+
+        const syncInputs = () => {
+          currentData.jenis = document.getElementById('inpJenis').value;
+          currentData.mapel = document.getElementById('inpMapel').value.trim();
+          currentData.kelas = document.getElementById('inpKelas').value.trim();
+        };
+
+        document.getElementById('btnSaveExamMeta')?.addEventListener('click', () => {
+          syncInputs();
+          if (!currentData.mapel) {
+            showToast('Isi nama mata pelajaran terlebih dahulu');
+            return;
+          }
+          if (uiState.draftExam) {
+            uiState.draftExam.updatedAt = Date.now();
+            appState.exams.unshift(uiState.draftExam);
+            appState.activeExamId = uiState.draftExam.id;
+            uiState.draftExam = null;
+          } else if (activeExam) {
+            activeExam.updatedAt = Date.now();
+          }
+          uiState.draftSavedNotice = true;
+          saveState();
+          showToast('Jenis ujian tersimpan');
+          renderApp();
+        });
+
+        document.getElementById('btnGoToKunci')?.addEventListener('click', () => {
+          syncInputs();
+          if (uiState.draftExam && currentData.mapel) {
+            appState.exams.unshift(uiState.draftExam);
+            appState.activeExamId = uiState.draftExam.id;
+            uiState.draftExam = null;
+            saveState();
+          }
+          uiState.settingsTab = 'kunci';
+          renderApp();
+        });
+      }
+
+      if (uiState.settingsTab === 'kunci') {
+        container.querySelectorAll('[data-key-idx]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const idx = Number(btn.getAttribute('data-key-idx'));
+            const cur = currentData.key[idx] || '';
+            const next = CHOICES[(CHOICES.indexOf(cur) + 1) % CHOICES.length];
+            currentData.key[idx] = next;
+            if (!uiState.draftExam && activeExam) saveState();
+            renderApp();
+          });
+        });
+
+        document.getElementById('btnPasteKey')?.addEventListener('click', () => {
+          const raw = prompt('Tempel kunci jawaban (contoh: ABCDABCD... atau 1.A 2.B ...):');
+          if (!raw) return;
+          const letters = raw.toUpperCase().replace(/[^ABCD]/g, '');
+          if (!letters.length) {
+            showToast('Tidak ditemukan huruf A–D');
+            return;
+          }
+          for (let i = 0; i < Math.min(50, letters.length); i++) {
+            currentData.key[i] = letters[i];
+          }
+          if (!uiState.draftExam && activeExam) saveState();
+          showToast(`${Math.min(50, letters.length)} kunci jawaban ditempel`);
+          renderApp();
+        });
+
+        document.getElementById('btnScanKeyPhoto')?.addEventListener('click', () => {
+          document.getElementById('keyPhotoInput').click();
+        });
+
+        document.getElementById('btnClearKey')?.addEventListener('click', () => {
+          currentData.key = Array(50).fill('');
+          if (!uiState.draftExam && activeExam) saveState();
+          showToast('Kunci jawaban dikosongkan');
+          renderApp();
+        });
+
+        document.getElementById('btnSaveAndScan')?.addEventListener('click', () => {
+          if (uiState.draftExam) {
+            if (!uiState.draftExam.mapel) uiState.draftExam.mapel = 'Ujian Baru';
+            appState.exams.unshift(uiState.draftExam);
+            appState.activeExamId = uiState.draftExam.id;
+            uiState.draftExam = null;
+          }
+          if (getActiveExam()) {
+            getActiveExam().students.forEach(s => {
+              const ev = evaluateAnswers(s.answers, getActiveExam().key, getActiveExam().jumlahSoal);
+              Object.assign(s, ev);
+            });
+            saveState();
+          }
+          showToast('Kunci tersimpan');
+          navigateTo('pindai');
+        });
+      }
+    }
+
+    /* ------------------------------------------------------------------------
+       VIEW 2: PINDAI (KAMERA LANGSUNG, GALERI, UJI SINTETIS & BATCH HASIL)
+       ------------------------------------------------------------------------ */
+    function renderPindai(container) {
+      const exam = getActiveExam();
+
+      if (!exam) {
+        container.innerHTML = `
+          <div class="bento-card" style="text-align:center;padding:36px 20px;">
+            <div style="font-size:40px;margin-bottom:10px;">📋</div>
+            <h2 style="font-size:20px;font-weight:800;margin-bottom:8px;">Belum Ada Ujian Aktif</h2>
+            <p style="font-size:14px;color:var(--text-muted);max-width:340px;margin:0 auto 20px;">
+              Atur jenis ujian dan kunci jawaban terlebih dahulu sebelum memindai lembar jawab siswa.
+            </p>
+            <button id="btnEmptyToSettings" class="btn btn-primary">Buka Pengaturan</button>
+          </div>
+        `;
+        document.getElementById('btnEmptyToSettings').addEventListener('click', () => navigateTo('pengaturan'));
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="page-header">
+          <h2 class="page-title">Pindai Lembar</h2>
+          <div class="exam-pill">
+            <span>${escapeHtml(exam.mapel)} · ${escapeHtml(exam.kelas)} (${exam.jumlahSoal} soal)</span>
+          </div>
+        </div>
+
+        ${uiState.cameraActive ? `
+          <div class="camera-stage">
+            <video id="liveVideo" playsinline muted></video>
+            <canvas id="liveOverlay"></canvas>
+            <div id="camStatusText" class="camera-overlay-msg">${escapeHtml(uiState.cameraStatus)}</div>
+            <div class="camera-controls">
+              <button id="btnStopCam" class="btn btn-soft btn-sm">Batal</button>
+              <button id="btnManualShutter" class="shutter-btn" aria-label="Potret manual"></button>
+              <button id="btnCamGallery" class="btn btn-soft btn-sm">Galeri</button>
+            </div>
+          </div>
+        ` : `
+          <div class="bento-card bento-pastel-blue" style="margin-bottom:14px;">
+            <div style="font-weight:800;font-size:17px;margin-bottom:6px;">Siap Memindai (1 hingga 3 Lembar Sekaligus)</div>
+            <p style="font-size:14px;color:var(--text-muted);margin-bottom:16px;">
+              Arahkan kamera ke kertas LJK utuh (3 lembar) atau lembar satuan. Foto diambil otomatis saat 4 kotak sudut stabil.
+            </p>
+            <div class="btn-row">
+              <button id="btnOpenCamera" class="btn btn-hero">📷 Buka Kamera</button>
+              <button id="btnPickGallery" class="btn btn-soft">🖼️ Pilih dari Galeri</button>
+              <button id="btnRunSynthetic" class="btn btn-soft btn-sm" title="Uji mesin pembaca dengan lembar simulasi">🧪 Uji Foto Sintetis</button>
+            </div>
+          </div>
+        `}
+
+        ${uiState.scannedBatch.length > 0 ? `
+          <div class="bento-grid" style="margin-top:16px;">
+            ${uiState.scannedBatch.map((item, idx) => `
+              <div class="bento-card">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;">
+                  <div style="display:flex;align-items:center;gap:12px;flex:1;">
+                    <div style="width:54px;height:54px;border-radius:50%;background:var(--bg-hero);color:#FFFFFF;display:grid;place-items:center;font-weight:800;font-size:17px;flex-shrink:0;">
+                      ${item.score}
+                    </div>
+                    <div style="flex:1;">
+                      <div style="font-size:12px;font-weight:700;color:var(--text-muted);">
+                        Lembar ${idx + 1} dari ${uiState.scannedBatch.length}
+                      </div>
+                      <input type="text" class="input-box" style="padding:8px 10px;margin-top:4px;"
+                        data-batch-name="${item.id}" value="${escapeHtml(item.nama)}" placeholder="Nama Siswa" />
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;">
+                  <span class="ans-pill ans-benar">Benar ${item.benar}</span>
+                  <span class="ans-pill ans-salah">Salah ${item.salah}</span>
+                  <span class="ans-pill ans-kosong">Kosong ${item.kosong}</span>
+                  ${item.cek > 0 ? `<span class="ans-pill ans-cek">Cek ${item.cek}</span>` : ''}
+                </div>
+
+                <div class="btn-row" style="margin-bottom:10px;">
+                  <button class="btn btn-primary btn-sm" data-save-batch="${item.id}">Simpan Hasil</button>
+                  <button class="btn btn-soft btn-sm" data-edit-batch="${item.id}">Koreksi Manual</button>
+                  <button class="btn btn-danger btn-sm" data-drop-batch="${item.id}">Buang</button>
+                </div>
+
+                <div class="ans-chip-grid">
+                  ${Array.from({ length: exam.jumlahSoal }, (_, q) => {
+                    const ans = item.answers[q] || '—';
+                    const k = exam.key[q] || '';
+                    const st = item.statuses[q];
+                    let cls = 'ans-kosong';
+                    if (st === 'cek') cls = 'ans-cek';
+                    else if (st === 'ganda') cls = 'ans-ganda';
+                    else if (item.answers[q]) cls = item.answers[q] === k ? 'ans-benar' : 'ans-salah';
+                    return `<div class="ans-pill ${cls}"><span>${q + 1}</span><span>${ans}</span></div>`;
+                  }).join('')}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="floating-scan-bar">
+            <div class="btn-row">
+              <button id="btnFloatScanAgain" class="btn btn-soft btn-sm">📷 Foto Lagi</button>
+              <button id="btnFloatGallery" class="btn btn-soft btn-sm">🖼️</button>
+            </div>
+            ${uiState.scannedBatch.length > 1 ? `
+              <button id="btnFloatSaveAll" class="btn btn-sm" style="background:#38BDF8;color:#0E2A3B;">
+                Simpan Semua (${uiState.scannedBatch.length})
+              </button>
+            ` : ''}
+          </div>
+        ` : ''}
+      `;
+
+      // Bindings
+      document.getElementById('btnOpenCamera')?.addEventListener('click', startCamera);
+      document.getElementById('btnPickGallery')?.addEventListener('click', () => document.getElementById('galleryInput').click());
+      document.getElementById('btnStopCam')?.addEventListener('click', () => { stopCamera(); renderApp(); });
+      document.getElementById('btnManualShutter')?.addEventListener('click', () => captureFromVideo(null));
+      document.getElementById('btnCamGallery')?.addEventListener('click', () => { stopCamera(); document.getElementById('galleryInput').click(); });
+
+      document.getElementById('btnRunSynthetic')?.addEventListener('click', () => {
+        const synCanvas = generateSyntheticTestPhoto(exam);
+        const scan = processImageSource(synCanvas, exam.jumlahSoal);
+        addScannedResultsToBatch(scan.results);
+      });
+
+      document.getElementById('btnFloatScanAgain')?.addEventListener('click', startCamera);
+      document.getElementById('btnFloatGallery')?.addEventListener('click', () => document.getElementById('galleryInput').click());
+
+      container.querySelectorAll('[data-batch-name]').forEach(inp => {
+        inp.addEventListener('input', () => {
+          const item = uiState.scannedBatch.find(x => x.id === inp.getAttribute('data-batch-name'));
+          if (item) item.nama = inp.value;
+        });
+      });
+
+      const saveSingleBatch = (id) => {
+        const idx = uiState.scannedBatch.findIndex(x => x.id === id);
+        if (idx === -1) return;
+        const item = uiState.scannedBatch[idx];
+        // Pastikan nama sama tidak tertimpa diam-diam (selalu simpan entri baru dengan ID unik)
+        exam.students.unshift({
+          ...item,
+          id: uid(),
+          nama: item.nama.trim() || `Siswa ${exam.students.length + 1}`,
+          createdAt: Date.now()
+        });
+        exam.updatedAt = Date.now();
+        uiState.scannedBatch.splice(idx, 1);
+        saveState();
+        showToast('Hasil tersimpan');
+        renderApp();
+      };
+
+      container.querySelectorAll('[data-save-batch]').forEach(btn => {
+        btn.addEventListener('click', () => saveSingleBatch(btn.getAttribute('data-save-batch')));
+      });
+
+      document.getElementById('btnFloatSaveAll')?.addEventListener('click', () => {
+        const total = uiState.scannedBatch.length;
+        while (uiState.scannedBatch.length > 0) {
+          const item = uiState.scannedBatch.shift();
+          exam.students.unshift({
+            ...item,
+            id: uid(),
+            nama: item.nama.trim() || `Siswa ${exam.students.length + 1}`,
+            createdAt: Date.now()
+          });
+        }
+        exam.updatedAt = Date.now();
+        saveState();
+        showToast(`${total} hasil tersimpan`);
+        renderApp();
+      });
+
+      container.querySelectorAll('[data-edit-batch]').forEach(btn => {
+        btn.addEventListener('click', () => openManualModal('batch', btn.getAttribute('data-edit-batch')));
+      });
+
+      container.querySelectorAll('[data-drop-batch]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-drop-batch');
+          uiState.scannedBatch = uiState.scannedBatch.filter(x => x.id !== id);
+          renderApp();
+        });
+      });
+    }
+
+    /* ------------------------------------------------------------------------
+       VIEW 3: HASIL (RINGKASAN, PERINGKAT, ANALISIS SOAL, DETAIL SISWA, CSV)
+       ------------------------------------------------------------------------ */
+    function renderHasil(container) {
+      const exam = getActiveExam();
+      if (!exam) {
+        container.innerHTML = `
+          <div class="bento-card" style="text-align:center;padding:36px 20px;">
+            <div style="font-size:40px;margin-bottom:10px;">📊</div>
+            <h2 style="font-size:20px;font-weight:800;margin-bottom:8px;">Belum Ada Data Hasil</h2>
+            <p style="font-size:14px;color:var(--text-muted);max-width:340px;margin:0 auto 20px;">
+              Silakan buat ujian di menu Pengaturan lalu pindai lembar jawab siswa.
+            </p>
+            <button id="btnResToSettings" class="btn btn-primary">Buka Pengaturan</button>
+          </div>
+        `;
+        document.getElementById('btnResToSettings').addEventListener('click', () => navigateTo('pengaturan'));
+        return;
+      }
+
+      const students = exam.students;
+      const count = students.length;
+      const scores = students.map(s => s.score);
+      const avg = count ? Math.round((scores.reduce((a, b) => a + b, 0) / count) * 10) / 10 : 0;
+      const highest = count ? Math.max(...scores) : 0;
+      const lowest = count ? Math.min(...scores) : 0;
+
+      // 5 Kelompok Sebaran Nilai (<60, 60-69, 70-79, 80-89, 90-100)
+      const buckets = [
+        { label: '<60', count: scores.filter(v => v < 60).length },
+        { label: '60-69', count: scores.filter(v => v >= 60 && v < 70).length },
+        { label: '70-79', count: scores.filter(v => v >= 70 && v < 80).length },
+        { label: '80-89', count: scores.filter(v => v >= 80 && v < 90).length },
+        { label: '90-100', count: scores.filter(v => v >= 90).length }
+      ];
+      const maxBucket = Math.max(1, ...buckets.map(b => b.count));
+
+      // Analisis butir soal
+      const itemStats = Array.from({ length: exam.jumlahSoal }, (_, q) => {
+        const k = exam.key[q] || '';
+        const rightCount = students.filter(s => s.answers[q] === k && k !== '').length;
+        const pct = count ? Math.round((rightCount / count) * 100) : 0;
+        let cat = 'Sulit';
+        if (pct >= 70) cat = 'Mudah';
+        else if (pct >= 40) cat = 'Sedang';
+        return { nomor: q + 1, kunci: k || '-', rightCount, pct, cat };
+      });
+
+      const mudahCnt = itemStats.filter(i => i.cat === 'Mudah').length;
+      const sedangCnt = itemStats.filter(i => i.cat === 'Sedang').length;
+      const sulitCnt = itemStats.filter(i => i.cat === 'Sulit').length;
+
+      const sortedRank = [...students].sort((a, b) => b.score - a.score || b.benar - a.benar);
+      const sortedDetail = [...students].sort((a, b) => {
+        if (uiState.detailSort === 'nilai') return b.score - a.score;
+        if (uiState.detailSort === 'nama') return a.nama.localeCompare(b.nama);
+        return (b.createdAt || 0) - (a.createdAt || 0);
+      });
+
+      container.innerHTML = `
+        <div class="page-header">
+          <div>
+            <h2 class="page-title">Hasil &amp; Analisis</h2>
+            <div style="font-size:13px;color:var(--text-muted);font-weight:600;">
+              ${escapeHtml(exam.jenis)} · ${escapeHtml(exam.mapel)} (${escapeHtml(exam.kelas)})
+            </div>
+          </div>
+          ${count > 0 ? `<button id="btnExportCsv" class="btn btn-hero btn-sm">📥 Ekspor CSV</button>` : ''}
+        </div>
+
+        <!-- SUMMARY BENTO ROW -->
+        <div class="summary-row" style="margin-bottom:14px;">
+          <div class="bento-card bento-hero" style="display:flex;align-items:center;gap:14px;">
+            <div class="score-ring" style="--ring-pct:${avg};">
+              <div class="score-ring-inner">${avg}</div>
+            </div>
+            <div>
+              <div style="font-size:13px;color:var(--text-hero-muted);font-weight:700;">Rata-rata Kelas</div>
+              <div style="font-size:13px;opacity:0.85;margin-top:4px;">Skala 0–100</div>
+            </div>
+          </div>
+
+          <div class="bento-card bento-pastel-blue">
+            <div class="field-label">Siswa</div>
+            <div class="big-stat">${count}</div>
+          </div>
+
+          <div class="bento-card bento-pastel-green">
+            <div class="field-label">Tertinggi</div>
+            <div class="big-stat">${highest}</div>
+          </div>
+
+          <div class="bento-card bento-pastel-pink">
+            <div class="field-label">Terendah</div>
+            <div class="big-stat">${lowest}</div>
+          </div>
+        </div>
+
+        <!-- SEBARAN NILAI -->
+        <div class="bento-card" style="margin-bottom:16px;">
+          <div style="font-weight:800;font-size:15px;">Sebaran Nilai</div>
+          <div class="dist-bars">
+            ${buckets.map(b => `
+              <div class="dist-col">
+                <span style="font-size:12px;font-weight:800;">${b.count}</span>
+                <div class="dist-bar" style="height:${Math.round((b.count / maxBucket) * 62) + 6}px;"></div>
+                <span style="font-size:11px;color:var(--text-muted);font-weight:700;">${b.label}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- TABS -->
+        <div class="sub-tabs" role="tablist">
+          <button class="sub-tab ${uiState.resultsTab === 'peringkat' ? 'active' : ''}" data-rtab="peringkat">Peringkat</button>
+          <button class="sub-tab ${uiState.resultsTab === 'analisis' ? 'active' : ''}" data-rtab="analisis">Analisis Soal</button>
+          <button class="sub-tab ${uiState.resultsTab === 'detail' ? 'active' : ''}" data-rtab="detail">Detail Siswa</button>
+        </div>
+
+        ${count === 0 ? `
+          <div class="bento-card" style="text-align:center;padding:28px;">
+            <p style="color:var(--text-muted);margin-bottom:14px;">Belum ada lembar siswa yang disimpan pada ujian ini.</p>
+            <button id="btnGoScanFromRes" class="btn btn-primary">Mulai Pindai Lembar</button>
+          </div>
+        ` : ''}
+
+        ${count > 0 && uiState.resultsTab === 'peringkat' ? `
+          <div class="rank-list">
+            ${sortedRank.map((s, idx) => {
+              const rankCls = idx === 0 ? 'rank-1' : idx === 1 ? 'rank-2' : idx === 2 ? 'rank-3' : '';
+              return `
+                <div class="bento-card" style="display:flex;align-items:center;gap:12px;padding:16px;">
+                  <div class="rank-badge ${rankCls}">${idx + 1}</div>
+                  <div style="flex:1;min-width:0;">
+                    <div style="font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+                      ${escapeHtml(s.nama)}
+                    </div>
+                    <div style="font-size:12px;color:var(--text-muted);font-weight:600;">
+                      B: ${s.benar} · S: ${s.salah} · K: ${s.kosong}
+                    </div>
+                    <div style="height:6px;background:var(--bg-card-alt);border-radius:999px;margin-top:6px;overflow:hidden;">
+                      <div style="height:100%;width:${s.score}%;background:var(--accent-primary);"></div>
+                    </div>
+                  </div>
+                  <div style="font-size:22px;font-weight:800;color:var(--accent-primary);">${s.score}</div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        ` : ''}
+
+        ${count > 0 && uiState.resultsTab === 'analisis' ? `
+          <div class="bento-grid">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+              <div class="bento-card bento-pastel-green" style="padding:14px;text-align:center;">
+                <div style="font-size:12px;font-weight:700;">Mudah (≥70%)</div>
+                <div style="font-size:24px;font-weight:800;">${mudahCnt}</div>
+              </div>
+              <div class="bento-card bento-pastel-yellow" style="padding:14px;text-align:center;">
+                <div style="font-size:12px;font-weight:700;">Sedang (40-69%)</div>
+                <div style="font-size:24px;font-weight:800;">${sedangCnt}</div>
+              </div>
+              <div class="bento-card bento-pastel-pink" style="padding:14px;text-align:center;">
+                <div style="font-size:12px;font-weight:700;">Sulit (&lt;40%)</div>
+                <div style="font-size:24px;font-weight:800;">${sulitCnt}</div>
+              </div>
+            </div>
+
+            <div class="bento-card">
+              <div style="display:grid;gap:8px;">
+                ${[...itemStats].sort((a, b) => a.pct - b.pct).map(it => {
+                  const badgeCls = it.cat === 'Mudah' ? 'ans-benar' : it.cat === 'Sedang' ? 'ans-ganda' : 'ans-salah';
+                  return `
+                    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;background:var(--bg-card-alt);border-radius:14px;">
+                      <div>
+                        <strong>Soal #${it.nomor}</strong>
+                        <span style="font-size:12px;color:var(--text-muted);margin-left:6px;">Kunci: ${it.kunci}</span>
+                      </div>
+                      <div style="display:flex;align-items:center;gap:8px;">
+                        <span style="font-size:13px;font-weight:700;">${it.rightCount}/${count} (${it.pct}%)</span>
+                        <span class="ans-pill ${badgeCls}">${it.cat}</span>
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
+              </div>
+            </div>
+          </div>
+        ` : ''}
+
+        ${count > 0 && uiState.resultsTab === 'detail' ? `
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <span style="font-size:13px;font-weight:700;color:var(--text-muted);">Urutkan:</span>
+            <div class="btn-row">
+              <button class="btn btn-sm ${uiState.detailSort === 'terbaru' ? 'btn-hero' : 'btn-soft'}" data-dsort="terbaru">Terbaru</button>
+              <button class="btn btn-sm ${uiState.detailSort === 'nilai' ? 'btn-hero' : 'btn-soft'}" data-dsort="nilai">Nilai</button>
+              <button class="btn btn-sm ${uiState.detailSort === 'nama' ? 'btn-hero' : 'btn-soft'}" data-dsort="nama">Nama</button>
+            </div>
+          </div>
+
+          <div class="bento-grid desktop-two-col">
+            ${sortedDetail.map(s => `
+              <div class="bento-card">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;">
+                  <input type="text" class="input-box" style="padding:8px 12px;" data-student-rename="${s.id}" value="${escapeHtml(s.nama)}" />
+                  <div style="font-size:22px;font-weight:800;color:var(--accent-primary);">${s.score}</div>
+                </div>
+                <div style="font-size:12px;color:var(--text-muted);font-weight:600;margin-bottom:12px;">
+                  Benar: ${s.benar} · Salah: ${s.salah} · Kosong: ${s.kosong}
+                </div>
+                <div class="btn-row">
+                  <button class="btn btn-soft btn-sm" data-edit-saved="${s.id}">Koreksi Manual</button>
+                  <button class="btn btn-danger btn-sm" data-del-saved="${s.id}">Hapus</button>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        ` : ''}
+      `;
+
+      container.querySelectorAll('[data-rtab]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          uiState.resultsTab = btn.getAttribute('data-rtab');
+          renderApp();
+        });
+      });
+
+      document.getElementById('btnGoScanFromRes')?.addEventListener('click', () => navigateTo('pindai'));
+
+      document.getElementById('btnExportCsv')?.addEventListener('click', () => {
+        const rows = [['No', 'Nama Siswa', 'Benar', 'Salah', 'Kosong', 'Nilai']];
+        sortedRank.forEach((s, i) => {
+          rows.push([i + 1, `"${s.nama.replace(/"/g, '""')}"`, s.benar, s.salah, s.kosong, s.score]);
+        });
+        const csv = rows.map(r => r.join(',')).join('\n');
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Hasil_${exam.mapel}_${exam.kelas}.csv`.replace(/\s+/g, '_');
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('Berkas CSV diunduh');
+      });
+
+      container.querySelectorAll('[data-dsort]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          uiState.detailSort = btn.getAttribute('data-dsort');
+          renderApp();
+        });
+      });
+
+      container.querySelectorAll('[data-student-rename]').forEach(inp => {
+        inp.addEventListener('change', () => {
+          const s = exam.students.find(x => x.id === inp.getAttribute('data-student-rename'));
+          if (s && inp.value.trim()) {
+            s.nama = inp.value.trim();
+            saveState();
+            showToast('Nama siswa diperbarui');
+          }
+        });
+      });
+
+      container.querySelectorAll('[data-edit-saved]').forEach(btn => {
+        btn.addEventListener('click', () => openManualModal('saved', btn.getAttribute('data-edit-saved')));
+      });
+
+      container.querySelectorAll('[data-del-saved]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-del-saved');
+          exam.students = exam.students.filter(x => x.id !== id);
+          saveState();
+          showToast('Data siswa dihapus');
+          renderApp();
+        });
+      });
+    }
+
+    /* ------------------------------------------------------------------------
+       VIEW 4: RIWAYAT & CADANGAN DATA (JSON EXPORT / RESTORE)
+       ------------------------------------------------------------------------ */
+    function renderRiwayat(container) {
+      const q = uiState.historyQuery.toLowerCase();
+      const filteredExams = appState.exams.filter(ex =>
+        ex.mapel.toLowerCase().includes(q) ||
+        ex.kelas.toLowerCase().includes(q) ||
+        ex.jenis.toLowerCase().includes(q)
+      );
+
+      // Aktivitas terbaru lintas ujian
+      const recentActivities = [];
+      appState.exams.forEach(ex => {
+        ex.students.forEach(st => {
+          recentActivities.push({ exam: ex, student: st });
+        });
+      });
+      recentActivities.sort((a, b) => (b.student.createdAt || 0) - (a.student.createdAt || 0));
+
+      container.innerHTML = `
+        <div class="page-header">
+          <h2 class="page-title">Riwayat &amp; Cadangan</h2>
+        </div>
+
+        <div class="field-group">
+          <input id="inpSearchHistory" type="search" class="input-box"
+            placeholder="Cari mata pelajaran, kelas, atau jenis ujian…" value="${escapeHtml(uiState.historyQuery)}" />
+        </div>
+
+        <div class="bento-grid desktop-two-col" style="margin-bottom:16px;">
+          ${filteredExams.length === 0 ? `
+            <div class="bento-card">
+              <p style="color:var(--text-muted);">Tidak ada ujian yang cocok dengan pencarian.</p>
+            </div>
+          ` : filteredExams.map(ex => `
+            <div class="bento-card ${ex.id === appState.activeExamId ? 'bento-pastel-blue' : ''}">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px;">
+                <div>
+                  <div style="font-size:12px;font-weight:700;color:var(--text-muted);">${escapeHtml(ex.jenis)}</div>
+                  <div style="font-size:17px;font-weight:800;">${escapeHtml(ex.mapel)} · ${escapeHtml(ex.kelas)}</div>
+                  <div style="font-size:13px;color:var(--text-muted);margin-top:2px;">
+                    ${ex.students.length} lembar dikoreksi · ${ex.jumlahSoal} soal
+                  </div>
+                </div>
+              </div>
+
+              <div class="btn-row">
+                <button class="btn btn-hero btn-sm" data-open-exam="${ex.id}">Buka Hasil</button>
+                <button class="btn btn-primary btn-sm" data-scan-exam="${ex.id}">Pindai Lagi</button>
+                <button class="btn btn-soft btn-sm" data-clone-exam="${ex.id}">Salin Ujian</button>
+                <button class="btn btn-danger btn-sm" data-del-exam="${ex.id}">Hapus</button>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <div class="bento-grid desktop-two-col">
+          <div class="bento-card">
+            <div style="font-weight:800;font-size:16px;margin-bottom:10px;">Aktivitas Terbaru</div>
+            ${recentActivities.length === 0 ? `
+              <p style="font-size:13px;color:var(--text-muted);">Belum ada lembar yang dikoreksi.</p>
+            ` : `
+              <div style="display:grid;gap:8px;">
+                ${recentActivities.slice(0, 6).map(act => `
+                  <button type="button" data-act-exam="${act.exam.id}"
+                    style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--bg-card-alt);border-radius:14px;text-align:left;">
+                    <div>
+                      <div style="font-weight:700;font-size:14px;">${escapeHtml(act.student.nama)}</div>
+                      <div style="font-size:12px;color:var(--text-muted);">${escapeHtml(act.exam.mapel)} (${escapeHtml(act.exam.kelas)})</div>
+                    </div>
+                    <span style="font-weight:800;color:var(--accent-primary);">${act.student.score}</span>
+                  </button>
+                `).join('')}
+              </div>
+            `}
+          </div>
+
+          <div class="bento-card bento-pastel-green">
+            <div style="font-weight:800;font-size:16px;margin-bottom:6px;">Cadangan &amp; Pemulihan Data</div>
+            <p style="font-size:13px;color:var(--text-muted);margin-bottom:14px;">
+              Simpan seluruh data ujian, kunci jawaban, dan nilai siswa ke berkas JSON agar aman saat ganti perangkat.
+            </p>
+            <div class="btn-row">
+              <button id="btnBackupJson" class="btn btn-hero btn-sm">Ekspor Cadangan (JSON)</button>
+              <button id="btnRestoreJson" class="btn btn-soft btn-sm">Pulihkan Cadangan</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('inpSearchHistory')?.addEventListener('input', (e) => {
+        uiState.historyQuery = e.target.value;
+        renderApp();
+      });
+
+      container.querySelectorAll('[data-open-exam]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.activeExamId = btn.getAttribute('data-open-exam');
+          saveState();
+          navigateTo('hasil');
+        });
+      });
+
+      container.querySelectorAll('[data-scan-exam]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.activeExamId = btn.getAttribute('data-scan-exam');
+          saveState();
+          navigateTo('pindai');
+        });
+      });
+
+      container.querySelectorAll('[data-clone-exam]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const orig = appState.exams.find(x => x.id === btn.getAttribute('data-clone-exam'));
+          if (!orig) return;
+          const copy = {
+            ...orig,
+            id: uid(),
+            kelas: orig.kelas + ' (Salinan)',
+            key: [...orig.key],
+            students: [],
+            updatedAt: Date.now()
+          };
+          appState.exams.unshift(copy);
+          appState.activeExamId = copy.id;
+          saveState();
+          showToast('Ujian disalin tanpa nilai lama');
+          renderApp();
+        });
+      });
+
+      container.querySelectorAll('[data-del-exam]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-del-exam');
+          if (!confirm('Hapus ujian ini beserta seluruh nilai siswanya?')) return;
+          appState.exams = appState.exams.filter(x => x.id !== id);
+          if (appState.activeExamId === id) {
+            appState.activeExamId = appState.exams[0]?.id || null;
+          }
+          saveState();
+          showToast('Ujian dihapus');
+          renderApp();
+        });
+      });
+
+      container.querySelectorAll('[data-act-exam]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          appState.activeExamId = btn.getAttribute('data-act-exam');
+          saveState();
+          navigateTo('hasil');
+        });
+      });
+
+      document.getElementById('btnBackupJson')?.addEventListener('click', () => {
+        const blob = new Blob([JSON.stringify(appState, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `Cadangan_KoreksiLJK_${todayLocalISO()}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast('Berkas cadangan diunduh');
+      });
+
+      document.getElementById('btnRestoreJson')?.addEventListener('click', () => {
+        document.getElementById('restoreJsonInput').click();
+      });
+    }
+
+    /* ========================================================================
+       H. FILE INPUT HANDLERS & SERVICE WORKER AUTO-UPDATE
+       ======================================================================== */
+    function handleImageFile(file, isKeyScan) {
+      if (!file) return;
+      const exam = uiState.draftExam || getActiveExam();
+      if (!exam) {
+        showToast('Buat ujian terlebih dahulu');
+        return;
+      }
+
+      const img = new Image();
+      img.onload = () => {
+        const scan = processImageSource(img, exam.jumlahSoal);
+        URL.revokeObjectURL(img.src);
+
+        if (scan.results.length === 0) {
+          showToast('Kotak sudut LJK tidak terdeteksi, coba foto lebih jelas');
+          return;
+        }
+
+        if (isKeyScan) {
+          const firstSheet = scan.results[0];
+          for (let i = 0; i < exam.jumlahSoal; i++) {
+            if (firstSheet.answers[i] && firstSheet.answers[i].length === 1) {
+              exam.key[i] = firstSheet.answers[i];
+            }
+          }
+          if (!uiState.draftExam) saveState();
+          showToast('Kunci jawaban berhasil dipindai dari foto');
+          renderApp();
+        } else {
+          addScannedResultsToBatch(scan.results);
+        }
+      };
+      img.src = URL.createObjectURL(file);
+    }
+
+    function initGlobalEvents() {
+      document.querySelectorAll('.nav-item').forEach(btn => {
+        btn.addEventListener('click', () => navigateTo(btn.getAttribute('data-nav')));
+      });
+
+      document.getElementById('galleryInput').addEventListener('change', (e) => {
+        handleImageFile(e.target.files[0], false);
+        e.target.value = '';
+      });
+
+      document.getElementById('keyPhotoInput').addEventListener('change', (e) => {
+        handleImageFile(e.target.files[0], true);
+        e.target.value = '';
+      });
+
+      document.getElementById('restoreJsonInput').addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const parsed = JSON.parse(reader.result);
+            if (parsed && Array.isArray(parsed.exams)) {
+              appState = parsed;
+              saveState();
+              showToast('Data cadangan berhasil dipulihkan');
+              renderApp();
+            } else {
+              showToast('Format berkas cadangan tidak valid');
+            }
+          } catch {
+            showToast('Gagal membaca berkas JSON');
+          }
+        };
+        reader.readAsText(file);
+        e.target.value = '';
+      });
+    }
+
+    function registerPWA() {
+      if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+        navigator.serviceWorker.register('./sw.js').then(reg => {
+          reg.addEventListener('updatefound', () => {
+            const newWorker = reg.installing;
+            if (!newWorker) return;
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'activated' && navigator.serviceWorker.controller) {
+                window.location.reload();
+              }
+            });
+          });
+        }).catch(() => {});
+      }
+    }
+
+    // BOOTSTRAP
+    loadState();
+    initThemeAndSplash();
+    initGlobalEvents();
+    registerPWA();
+    renderApp();
+  </script>
+</body>
+</html>
